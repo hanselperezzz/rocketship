@@ -6,15 +6,21 @@ using UnityEngine;
 public class Rocket : MonoBehaviour {
 
     Rigidbody rigidBody;
+    AudioSource thruster;
+    bool thruster_play;
+    bool thruster_ToggleChange;
 
 	// Use this for initialization
 	void Start () {
         rigidBody = GetComponent<Rigidbody>();
+        thruster = GetComponent<AudioSource>();
+        thruster_play = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         ProcessInput();
+
 	}
 
     private void ProcessInput()
@@ -22,6 +28,14 @@ public class Rocket : MonoBehaviour {
         if (Input.GetKey(KeyCode.Space)) 
         {
             rigidBody.AddRelativeForce(Vector3.up);
+            if (!thruster.isPlaying) {
+                thruster.Play();
+            }
+
+        }
+        else
+        {
+            thruster.Stop();
         }
 
         if (Input.GetKey(KeyCode.A))
