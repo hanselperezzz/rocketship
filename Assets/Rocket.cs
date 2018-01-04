@@ -43,7 +43,7 @@ public class Rocket : MonoBehaviour {
 
     private void Thrust()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
         {
             float thrustPower = mainThrust * Time.deltaTime;
             rigidBody.AddRelativeForce(Vector3.up * thrustPower);
@@ -65,11 +65,11 @@ public class Rocket : MonoBehaviour {
 
         float rotationThisFrame = rcsThrust * Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.Rotate(Vector3.forward * rotationThisFrame);
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.RightArrow))
         {
             transform.Rotate(-Vector3.forward * rotationThisFrame);
         }
