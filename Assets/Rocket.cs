@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 public class Rocket : MonoBehaviour {
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 30f;
+    [SerializeField] AudioClip mainEngine;
+    [SerializeField] AudioClip success;
+    [SerializeField] AudioClip death;
 
     Rigidbody rigidBody;
     AudioSource thruster;
@@ -25,8 +28,8 @@ public class Rocket : MonoBehaviour {
 	void Update () {
         if (state == State.Alive)
         {
-            Thrust();
-            Rotate();
+            RespondToThrustInput();
+            RespodToRotateInput();
         } 
 	}
 
@@ -37,20 +40,30 @@ public class Rocket : MonoBehaviour {
 
             case "Friendly":
                 //Do nothing
-                print("cabbage");
-                Invoke("PrintMore" , 1.5f);
-                print("apple");
                 break;
             case "Finish":
-                state = State.Transcending;
-                Invoke("LoadNextScene" , 1f);
+                StartSuccessSequence();
                 break;
             default:
-                print("Dead");
-                state = State.Dying;
-                Invoke("LoadFirstLevel", 1f);
+                StartDeathSequence();
                 break;
         }
+    }
+
+    private void StartDeathSequence()
+    {
+        state = State.Dying;
+        thruster.Stop();
+        thruster.PlayOneShot(death);
+        Invoke("LoadFirstLevel", 1f);
+    }
+
+    private void StartSuccessSequence()
+    {
+        state = State.Transcending;
+        thruster.Stop();
+        thruster.PlayOneShot(success);
+        Invoke("LoadNextScene", 1f);
     }
 
     private void LoadNextScene()
@@ -63,16 +76,11 @@ public class Rocket : MonoBehaviour {
         SceneManager.LoadScene(0);
     }
 
-    private void Thrust()
+    private void RespondToThrustInput()
     {
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space))
         {
-            float thrustPower = mainThrust * Time.deltaTime;
-            rigidBody.AddRelativeForce(Vector3.up * thrustPower);
-            if (!thruster.isPlaying)
-            {
-                thruster.Play();
-            }
+            ApplyThrust();
 
         }
         else
@@ -81,7 +89,17 @@ public class Rocket : MonoBehaviour {
         }
     }
 
-    private void Rotate()
+    private void ApplyThrust()
+    {
+        float thrustPower = mainThrust * Time.deltaTime;
+        rigidBody.AddRelativeForce(Vector3.up * thrustPower);
+        if (!thruster.isPlaying)
+        {
+            thruster.PlayOneShot(mainEngine);
+        }
+    }
+
+    private void RespodToRotateInput()
     {
         rigidBody.freezeRotation = true; //take manual control of rotation
 
