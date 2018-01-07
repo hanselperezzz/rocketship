@@ -21,6 +21,9 @@ public class Rocket : MonoBehaviour {
     bool thruster_play;
     bool thruster_ToggleChange;
 
+    public int counter;
+    public int successPlay;
+
 	// Use this for initialization
 	void Start () {
         rigidBody = GetComponent<Rigidbody>();
@@ -49,20 +52,26 @@ public class Rocket : MonoBehaviour {
                 StartSuccessSequence();
                 break;
             default:
-                StartDeathSequence();
+                if (counter < 1 && successPlay < 1)
+                {
+                    StartDeathSequence(); 
+                }
+
+
                 break;
         }
     }
-    public int counter = 1;
+
 
 
     private void StartDeathSequence()
     {
         state = State.Dying;
+        counter++;
         thruster.Stop();
         deathParticles.Play();
         thruster.PlayOneShot(death);
-
+        mainEngineParticles.Stop();
         Invoke("LoadFirstLevel", 2f);
 
     }
@@ -71,11 +80,20 @@ public class Rocket : MonoBehaviour {
 
     private void StartSuccessSequence()
     {
+        if (successPlay < 1)
+        {
+            Landed();
+        }
+    }
+
+    private void Landed()
+    {
         state = State.Transcending;
         thruster.Stop();
         thruster.PlayOneShot(success);
+        successPlay++;
         successParticles.Play();
-        Invoke("LoadNextScene", 1f);
+        Invoke("LoadNextScene", 2f);
     }
 
     private void LoadNextScene()
