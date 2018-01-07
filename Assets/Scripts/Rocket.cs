@@ -53,15 +53,21 @@ public class Rocket : MonoBehaviour {
                 break;
         }
     }
+    public int counter = 1;
+
 
     private void StartDeathSequence()
     {
         state = State.Dying;
         thruster.Stop();
-        thruster.PlayOneShot(death);
         deathParticles.Play();
-        Invoke("LoadFirstLevel", 1f);
+        thruster.PlayOneShot(death);
+
+        Invoke("LoadFirstLevel", 2f);
+
     }
+
+
 
     private void StartSuccessSequence()
     {

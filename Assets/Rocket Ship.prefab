@@ -251,13 +251,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1622112457596268}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 6.150197, y: 3.1, z: -12.432644}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481092451089730}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4265655051889952
 Transform:
   m_ObjectHideFlags: 1
@@ -304,7 +304,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1746482782632578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -39.92, y: 14.92, z: 0}
+  m_LocalPosition: {x: -39.92, y: 16.2, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4323821945983548}
@@ -788,14 +788,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcaf68f69f2ca40748c23e7bd279513d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rcsThrust: 100
-  mainThrust: 35
+  rcsThrust: 300
+  mainThrust: 50
   mainEngine: {fileID: 8300000, guid: f5425e76f39e5445d8ff35abfa09e202, type: 3}
   success: {fileID: 8300000, guid: b2e1af910d780417096a610ea19f6e9d, type: 3}
   death: {fileID: 8300000, guid: a089d7acc0c1749a9a88dc22feb42d7c, type: 3}
   mainEngineParticles: {fileID: 198473444306846868}
   successParticles: {fileID: 198897587269720582}
   deathParticles: {fileID: 198187830231197366}
+  counter: 0
 --- !u!135 &135086004288851614
 SphereCollider:
   m_ObjectHideFlags: 1
