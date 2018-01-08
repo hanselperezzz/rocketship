@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Rocket : MonoBehaviour {
+public class Rocket : MonoBehaviour
+{
     [SerializeField] float rcsThrust = 100f;
     [SerializeField] float mainThrust = 30f;
     [SerializeField] AudioClip mainEngine;
@@ -26,15 +27,17 @@ public class Rocket : MonoBehaviour {
     public int counter;
     public int successPlay;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         rigidBody = GetComponent<Rigidbody>();
         thruster = GetComponent<AudioSource>();
         thruster_play = true;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if (state == State.Alive)
         {
             RespondToThrustInput();
@@ -42,16 +45,16 @@ public class Rocket : MonoBehaviour {
         }
         if (Debug.isDebugBuild)
         {
-            RespondToDebugKeys();  
+            RespondToDebugKeys();
         }
 
         const float tau = Mathf.PI * 2f;
         print(Mathf.Sin((tau / 4f)));
-	}
+    }
 
     private void RespondToDebugKeys()
     {
-        if (Input.GetKeyDown(KeyCode.L)) 
+        if (Input.GetKeyDown(KeyCode.L))
         {
             LoadNextScene();
         }
@@ -65,7 +68,7 @@ public class Rocket : MonoBehaviour {
     {
         if (state != State.Alive || collisionsDisabled) { return; }
 
-        switch (collision.gameObject.tag) 
+        switch (collision.gameObject.tag)
         {
             case "Friendly":
                 //Do nothing
@@ -76,7 +79,7 @@ public class Rocket : MonoBehaviour {
             default:
                 if (counter < 1 && successPlay < 1)
                 {
-                    StartDeathSequence(); 
+                    StartDeathSequence();
                 }
                 break;
         }
@@ -116,7 +119,13 @@ public class Rocket : MonoBehaviour {
 
     private void LoadNextScene()
     {
-        SceneManager.LoadScene(1);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex + 1;
+        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings) 
+        {
+            nextSceneIndex = 0;
+        }
+        SceneManager.LoadScene(nextSceneIndex);
     }
 
     private void LoadFirstLevel()
