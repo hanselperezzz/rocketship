@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour {
@@ -20,6 +21,7 @@ public class Rocket : MonoBehaviour {
 
     bool thruster_play;
     bool thruster_ToggleChange;
+    bool collisionsDisabled = false;
 
     public int counter;
     public int successPlay;
@@ -37,14 +39,34 @@ public class Rocket : MonoBehaviour {
         {
             RespondToThrustInput();
             RespodToRotateInput();
-        } 
+        }
+        if (Debug.isDebugBuild)
+        {
+            RespondToDebugKeys();  
+        }
+
+        const float tau = Mathf.PI * 2f;
+        print(Mathf.Sin((tau / 4f)));
 	}
+
+    private void RespondToDebugKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.L)) 
+        {
+            LoadNextScene();
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            collisionsDisabled = !collisionsDisabled;
+        }
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (state != State.Alive || collisionsDisabled) { return; }
+
         switch (collision.gameObject.tag) 
         {
-
             case "Friendly":
                 //Do nothing
                 break;
@@ -56,13 +78,9 @@ public class Rocket : MonoBehaviour {
                 {
                     StartDeathSequence(); 
                 }
-
-
                 break;
         }
     }
-
-
 
     private void StartDeathSequence()
     {
