@@ -17,12 +17,10 @@ public class Rocket : MonoBehaviour
     Rigidbody rigidBody;
     AudioSource thruster;
 
-    enum State { Alive, Dying, Transcending };
-    State state = State.Alive;
-
     bool thruster_play;
     bool thruster_ToggleChange;
     bool collisionsDisabled = false;
+    bool isTransitioning = false;
 
     public int counter;
     public int successPlay;
@@ -38,7 +36,7 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (state == State.Alive)
+        if (!isTransitioning)
         {
             RespondToThrustInput();
             RespodToRotateInput();
@@ -66,7 +64,7 @@ public class Rocket : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (state != State.Alive || collisionsDisabled) { return; }
+        if (isTransitioning || collisionsDisabled) { return; }
 
         switch (collision.gameObject.tag)
         {
@@ -87,7 +85,7 @@ public class Rocket : MonoBehaviour
 
     private void StartDeathSequence()
     {
-        state = State.Dying;
+        isTransitioning = true;
         counter++;
         thruster.Stop();
         deathParticles.Play();
@@ -109,7 +107,7 @@ public class Rocket : MonoBehaviour
 
     private void Landed()
     {
-        state = State.Transcending;
+        isTransitioning = true;
         thruster.Stop();
         thruster.PlayOneShot(success);
         successPlay++;
@@ -142,10 +140,15 @@ public class Rocket : MonoBehaviour
         }
         else
         {
-            thruster.Stop();
-            mainEngineParticles.Stop();
+            StopApplyingThrust();
 
         }
+    }
+
+    private void StopApplyingThrust()
+    {
+        thruster.Stop();
+        mainEngineParticles.Stop();
     }
 
     private void ApplyThrust()
@@ -161,7 +164,7 @@ public class Rocket : MonoBehaviour
 
     private void RespodToRotateInput()
     {
-        rigidBody.freezeRotation = true; //take manual control of rotation
+        rigidBody.angularVelocity = Vector3.zero; // remove rotation due to physics
 
         float rotationThisFrame = rcsThrust * Time.deltaTime;
 
@@ -173,7 +176,5 @@ public class Rocket : MonoBehaviour
         {
             transform.Rotate(-Vector3.forward * rotationThisFrame);
         }
-
-        rigidBody.freezeRotation = false; //resume physics control of rotation
     }
 }
