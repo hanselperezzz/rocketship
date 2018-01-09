@@ -265,6 +265,42 @@ Prefab:
       propertyPath: m_Name
       value: Terrain Obstacles
       objectReference: {fileID: 0}
+    - target: {fileID: 1908112258720642, guid: bb0805868aa284930b6e36a0c1ff0f42, type: 2}
+      propertyPath: m_TagString
+      value: Friendly
+      objectReference: {fileID: 0}
+    - target: {fileID: 1040010379381962, guid: bb0805868aa284930b6e36a0c1ff0f42, type: 2}
+      propertyPath: m_TagString
+      value: Friendly
+      objectReference: {fileID: 0}
+    - target: {fileID: 1096701522173380, guid: bb0805868aa284930b6e36a0c1ff0f42, type: 2}
+      propertyPath: m_TagString
+      value: Friendly
+      objectReference: {fileID: 0}
+    - target: {fileID: 23396352979947748, guid: bb0805868aa284930b6e36a0c1ff0f42,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38c0171d3e2d64f93a7d12868dffe0f9, type: 2}
+    - target: {fileID: 23666096532174822, guid: bb0805868aa284930b6e36a0c1ff0f42,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38c0171d3e2d64f93a7d12868dffe0f9, type: 2}
+    - target: {fileID: 23262848455932406, guid: bb0805868aa284930b6e36a0c1ff0f42,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38c0171d3e2d64f93a7d12868dffe0f9, type: 2}
+    - target: {fileID: 1718907908678312, guid: bb0805868aa284930b6e36a0c1ff0f42, type: 2}
+      propertyPath: m_TagString
+      value: Friendly
+      objectReference: {fileID: 0}
+    - target: {fileID: 23483675642986000, guid: bb0805868aa284930b6e36a0c1ff0f42,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38c0171d3e2d64f93a7d12868dffe0f9, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb0805868aa284930b6e36a0c1ff0f42, type: 2}
   m_IsPrefabParent: 0
